@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     console.log('In /tasks GET');
-    let queryText = `SELECT * FROM "tasks" ORDER BY "task";`;
+    let queryText = `SELECT * FROM "tasks" ORDER BY "task", "completed";`;
     pool.query(queryText).then((result) => {
         console.log(result);
         res.send(result.rows);        

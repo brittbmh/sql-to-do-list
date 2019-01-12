@@ -5,3 +5,8 @@ body {
 #submit-task {
     margin-top: 15px;
 }
+
+.completed {
+    background-color: rgb(226, 226, 231);
+    color: rgb(121, 125, 131);
+}

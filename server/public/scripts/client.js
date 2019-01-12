@@ -73,7 +73,7 @@ function getTasks() {
             } else {
                 alert('can not complete request')
             };
-            $('#task-list-body').append(`<tr>
+            $('#task-list-body').append(`<tr class="${status}">
                                             <td>${task.task}</td>
                                             <td>${status}</td>
                                             <td>
@@ -90,3 +90,4 @@ function getTasks() {
         console.log(error);
     })
 }
+
