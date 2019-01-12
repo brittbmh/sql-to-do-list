@@ -12,6 +12,17 @@ const pool = new Pool({
     idleTimeoutMillis: 10000
 });
 
+router.delete('/:id', (req, res) => {
+    console.log('In /tasks DELETE');
+    const queryText = `DELETE FROM "tasks" WHERE "id" = $1;`;
+    pool.query(queryText, [req.params.id]).then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('Error in DELETE /tasks', error);
+        res.sendStatus(500);
+    })
+})
+
 router.put('/:id', (req, res) => {
     console.log('In /tasks PUT');
     const queryText = `UPDATE "tasks" SET "completed" = not "completed" WHERE "id" = $1;`;
