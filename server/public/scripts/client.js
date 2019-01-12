@@ -6,6 +6,21 @@ function readyNow() {
     getTasks();
     $('#input-tasks').on('submit', addNewTask);
     $('#task-list-body').on('click', '.update-status', updateStatus)
+    $('#task-list-body').on('click', '.remove-task', deleteTask)
+}
+
+function deleteTask() {
+    const taskId = ($(this).data('taskid'));
+    console.log(taskId);
+    $.ajax({
+        method: 'DELETE',
+        url: `/tasks/${taskId}`
+    }).then((result) => {
+        getTasks();
+    }).catch((error) => {
+        alert('unable to delete task');
+        console.log('Error in DELETE /tasks', error);
+    })
 }
 
 function updateStatus() {

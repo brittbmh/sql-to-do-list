@@ -14,7 +14,7 @@ const pool = new Pool({
 
 router.put('/:id', (req, res) => {
     console.log('In /tasks PUT');
-    const queryText = `UPDATE "tasks" SET "completed" = true WHERE "id" = $1;`;
+    const queryText = `UPDATE "tasks" SET "completed" = not "completed" WHERE "id" = $1;`;
     pool.query(queryText, [req.params.id]).then((result) => {
         res.sendStatus(200);
     }).catch((error) => {
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     console.log('In /tasks GET');
-    let queryText = `SELECT * FROM "tasks" ORDER BY "tasks";`;
+    let queryText = `SELECT * FROM "tasks" ORDER BY "task";`;
     pool.query(queryText).then((result) => {
         console.log(result);
         res.send(result.rows);        
