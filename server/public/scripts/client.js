@@ -10,9 +10,10 @@ function readyNow() {
 
 function updateStatus() {
     console.log($(this).data('taskid'));
+    const taskId = ($(this).data('taskid'));
     $.ajax({
         method: 'PUT',
-        url: '/tasks'
+        url: `/tasks/${taskId}`
     }).then((result) => {
         getTasks();
     }).catch((error) => {

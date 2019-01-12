@@ -12,9 +12,15 @@ const pool = new Pool({
     idleTimeoutMillis: 10000
 });
 
-router.put('/', (req, res) => {
+router.put('/:id', (req, res) => {
     console.log('In /tasks PUT');
-    
+    const queryText = `UPDATE "tasks" SET "completed" = true WHERE "id" = $1;`;
+    pool.query(queryText, [req.params.id]).then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('Error in PUT /tasks', error);
+        res.sendStatus(500);        
+    })
 })
 
 router.post('/', (req, res) => {
