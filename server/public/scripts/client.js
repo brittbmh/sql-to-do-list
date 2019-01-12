@@ -4,6 +4,26 @@ $(document).ready(readyNow);
 
 function readyNow() {
     getTasks();
+    $('#input-tasks').on('submit', addNewTask);
+}
+
+function addNewTask(event) {
+    event.preventDefault();
+    console.log('In function addNewTask');
+    const newTask = { task: $('#task-name').val()};
+    console.log(newTask);
+    
+    $.ajax({
+        method: 'POST',
+        url: '/tasks',
+        data: newTask
+    }).then((result) => {
+        console.log(result);
+        getTasks();
+    }).catch((error) => {
+        alert('unable to add task');
+        console.log(error);
+    })
 }
 
 function getTasks() {
@@ -13,6 +33,7 @@ function getTasks() {
     }).then((result) => {
         const listOfTasks = result;
         console.log(listOfTasks);
+        $('#task-list-body').empty();
         for (task of listOfTasks) {
             let status;
             if(task.completed === true){
