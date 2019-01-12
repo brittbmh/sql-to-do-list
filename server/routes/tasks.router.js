@@ -12,6 +12,11 @@ const pool = new Pool({
     idleTimeoutMillis: 10000
 });
 
+router.put('/', (req, res) => {
+    console.log('In /tasks PUT');
+    
+})
+
 router.post('/', (req, res) => {
     console.log(('In /tasks POST'));
     const newTask = (req.body);

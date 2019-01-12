@@ -5,6 +5,20 @@ $(document).ready(readyNow);
 function readyNow() {
     getTasks();
     $('#input-tasks').on('submit', addNewTask);
+    $('#task-list-body').on('click', '.update-status', updateStatus)
+}
+
+function updateStatus() {
+    console.log($(this).data('taskid'));
+    $.ajax({
+        method: 'PUT',
+        url: '/tasks'
+    }).then((result) => {
+        getTasks();
+    }).catch((error) => {
+        alert('unable to update task');
+        console.log('Error in PUT /tasks', error);
+    })
 }
 
 function addNewTask(event) {
