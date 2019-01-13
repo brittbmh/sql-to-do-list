@@ -12,15 +12,29 @@ function readyNow() {
 function deleteTask() {
     const taskId = ($(this).data('taskid'));
     console.log(taskId);
-    $.ajax({
-        method: 'DELETE',
-        url: `/tasks/${taskId}`
-    }).then((result) => {
-        getTasks();
-    }).catch((error) => {
-        alert('unable to delete task');
-        console.log('Error in DELETE /tasks', error);
-    })
+    swal({
+        title: 'wait a tic... ',
+        text: 'click confirm to delete the task',
+        icon: 'warning',
+        buttons: true
+    }).then((willDelete) => {
+        if (willDelete) {
+            swal("task removed", { 
+                icon: 'success', 
+            })
+            $.ajax({
+                method: 'DELETE',
+                url: `/tasks/${taskId}`
+            }).then((result) => {
+                getTasks();
+            }).catch((error) => {
+                swal('unable to delete task');
+                console.log('Error in DELETE /tasks', error);
+            });
+        } else {
+            swal('task remains')
+        };
+    });
 }
 
 function updateStatus() {
@@ -32,7 +46,7 @@ function updateStatus() {
     }).then((result) => {
         getTasks();
     }).catch((error) => {
-        alert('unable to update task');
+        swal('unable to update task');
         console.log('Error in PUT /tasks', error);
     })
 }
@@ -40,9 +54,9 @@ function updateStatus() {
 function addNewTask(event) {
     event.preventDefault();
     console.log('In function addNewTask');
-    const newTask = { task: $('#task-name').val()};
+    const newTask = { task: $('#task-name').val() };
     console.log(newTask);
-    
+
     $.ajax({
         method: 'POST',
         url: '/tasks',
@@ -51,7 +65,7 @@ function addNewTask(event) {
         console.log(result);
         getTasks();
     }).catch((error) => {
-        alert('unable to add task');
+        swal('unable to add task');
         console.log(error);
     })
 }
@@ -66,12 +80,12 @@ function getTasks() {
         $('#task-list-body').empty();
         for (task of listOfTasks) {
             let status;
-            if(task.completed === true){
+            if (task.completed === true) {
                 status = 'completed';
-            } else if (task.completed === false){
+            } else if (task.completed === false) {
                 status = 'not done';
             } else {
-                alert('can not complete request')
+                swal('can not complete request')
             };
             $('#task-list-body').append(`<tr class="${status}">
                                             <td>${task.task}</td>
@@ -86,7 +100,7 @@ function getTasks() {
             </tr>`)
         }
     }).catch((error) => {
-        alert('initial task pull failed');
+        swal('initial task pull failed');
         console.log(error);
     })
 }
