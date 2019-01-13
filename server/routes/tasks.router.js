@@ -47,6 +47,19 @@ router.post('/', (req, res) => {
         })
 })
 
+router.get('/hidden', (req, res) => {
+    console.log('In /tasks/hidden GET');
+    let queryText = `SELECT * FROM "tasks" WHERE "completed" = FALSE ORDER BY "task";`;
+    pool.query(queryText).then((result) => {
+        console.log(result);
+        res.send(result.rows)  
+    }).catch((error) => {
+        console.log('Error in GET /tasks/hidden', error);
+        res.sendStatus(500);
+    })
+    
+});
+
 router.get('/', (req, res) => {
     console.log('In /tasks GET');
     let queryText = `SELECT * FROM "tasks" ORDER BY "task", "completed";`;

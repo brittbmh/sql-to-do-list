@@ -8,7 +8,7 @@ function readyNow() {
     $('#task-list-body').on('click', '.update-status', updateStatus)
     $('#task-list-body').on('click', '.remove-task', deleteTask)
     $('#hide-complete').on('click', hideCompleted)
-    
+
 }
 
 let hideStatus;
@@ -20,9 +20,13 @@ function hideCompleted() {
         method: 'GET',
         url: '/tasks/hidden'
     }).then((result) => {
-        $('#task-list-body').append(`<tr class="${status}">
+        console.log(result);
+        const listOfTasks = result;
+        $('#task-list-body').empty();
+        for (task of listOfTasks) {
+            $('#task-list-body').append(`<tr>
                                             <td>${task.task}</td>
-                                            <td>${status}</td>
+                                            <td>not done</td>
                                             <td>
                                                 <button class="update-status"
                                                     data-taskid="${task.id}">Update</button>
@@ -31,6 +35,7 @@ function hideCompleted() {
                                                 <button class="remove-task"
                                                     data-taskid="${task.id}">Delete</button>
             </tr>`)
+        }
     }).catch((error) => {
         console.log('Error in hidden GET', error);
         swal('unable to load task list')
@@ -47,8 +52,8 @@ function deleteTask() {
         buttons: true
     }).then((willDelete) => {
         if (willDelete) {
-            swal("task removed", { 
-                icon: 'success', 
+            swal("task removed", {
+                icon: 'success',
             })
             $.ajax({
                 method: 'DELETE',
