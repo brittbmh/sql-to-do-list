@@ -64,7 +64,11 @@ function deleteTask() {
                 method: 'DELETE',
                 url: `/tasks/${taskId}`
             }).then((result) => {
-                getTasks();
+                if (hideStatus === 'hidden') {
+                    hideCompleted();
+                } else {
+                    getTasks();
+                }
             }).catch((error) => {
                 swal('unable to delete task');
                 console.log('Error in DELETE /tasks', error);
@@ -82,7 +86,11 @@ function updateStatus() {
         method: 'PUT',
         url: `/tasks/${taskId}`
     }).then((result) => {
-        getTasks();
+        if (hideStatus === 'hidden') {
+            hideCompleted();
+        } else {
+            getTasks();
+        }
     }).catch((error) => {
         swal('unable to update task');
         console.log('Error in PUT /tasks', error);
