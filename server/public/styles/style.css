@@ -10,3 +10,7 @@ body {
     background-color: rgb(226, 226, 231);
     color: rgb(121, 125, 131);
 }
+
+#hide-complete {
+    margin-bottom: 10px;
+}
