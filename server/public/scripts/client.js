@@ -7,7 +7,8 @@ function readyNow() {
     $('#input-tasks').on('submit', addNewTask);
     $('#task-list-body').on('click', '.update-status', updateStatus)
     $('#task-list-body').on('click', '.remove-task', deleteTask)
-    $('#hide-complete').on('click', hideCompleted)
+    $('#status-button').on('click', '#hide-complete', hideCompleted)
+    $('#status-button').on('click', '#show-all', getTasks)
 
 }
 
@@ -21,6 +22,10 @@ function hideCompleted() {
         url: '/tasks/hidden'
     }).then((result) => {
         console.log(result);
+        $('#status-button').empty();
+        $('#status-button').append(`
+            <button class="btn btn-outline-primary btn-sm" id="show-all">show all tasks</button>`
+        );
         const listOfTasks = result;
         $('#task-list-body').empty();
         for (task of listOfTasks) {
@@ -96,7 +101,11 @@ function addNewTask(event) {
         data: newTask
     }).then((result) => {
         console.log(result);
-        getTasks();
+        if (hideStatus === 'hidden') {
+            hideCompleted();
+        } else {
+            getTasks();
+        }
     }).catch((error) => {
         swal('unable to add task');
         console.log(error);
@@ -110,7 +119,12 @@ function getTasks() {
     }).then((result) => {
         const listOfTasks = result;
         console.log(listOfTasks);
+        hideStatus = 'show';
         $('#task-list-body').empty();
+        $('#status-button').empty();
+        $('#status-button').append(`
+            <button class="btn btn-outline-primary btn-sm" id="hide-complete">hide completed tasks</button>`
+        );
         for (task of listOfTasks) {
             let status;
             if (task.completed === true) {
