@@ -12,8 +12,11 @@ function readyNow() {
 
 }
 
+// variable to store current status of table - hide complete tasks or no
 let hideStatus;
 
+
+//function to hide completed tasks in the table
 function hideCompleted() {
     console.log('in hideCompleted');
     hideStatus = 'hidden';
@@ -47,6 +50,8 @@ function hideCompleted() {
     })
 }
 
+
+// function to delete tasks from the list/database
 function deleteTask() {
     const taskId = ($(this).data('taskid'));
     console.log(taskId);
@@ -56,6 +61,7 @@ function deleteTask() {
         icon: 'warning',
         buttons: true
     }).then((willDelete) => {
+        // alert with confirmation button
         if (willDelete) {
             swal("task removed", {
                 icon: 'success',
@@ -79,6 +85,8 @@ function deleteTask() {
     });
 }
 
+
+// change the status of the task from not done to complete and back
 function updateStatus() {
     console.log($(this).data('taskid'));
     const taskId = ($(this).data('taskid'));
@@ -97,6 +105,7 @@ function updateStatus() {
     })
 }
 
+// to add new task to database - assumes task is not yet complete
 function addNewTask(event) {
     event.preventDefault();
     console.log('In function addNewTask');
@@ -120,6 +129,7 @@ function addNewTask(event) {
     })
 }
 
+// initial task to load table with all tasks
 function getTasks() {
     $.ajax({
         method: 'GET',

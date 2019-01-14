@@ -23,6 +23,8 @@ router.delete('/:id', (req, res) => {
     })
 })
 
+
+// send updates of status to database
 router.put('/:id', (req, res) => {
     console.log('In /tasks PUT');
     const queryText = `UPDATE "tasks" SET "completed" = not "completed" WHERE "id" = $1;`;
@@ -34,6 +36,7 @@ router.put('/:id', (req, res) => {
     })
 })
 
+// send new tasks to database
 router.post('/', (req, res) => {
     console.log(('In /tasks POST'));
     const newTask = (req.body);
@@ -47,6 +50,8 @@ router.post('/', (req, res) => {
         })
 })
 
+
+// get incomplete tasks from database
 router.get('/hidden', (req, res) => {
     console.log('In /tasks/hidden GET');
     let queryText = `SELECT * FROM "tasks" WHERE "completed" = FALSE ORDER BY "task";`;
@@ -60,6 +65,7 @@ router.get('/hidden', (req, res) => {
     
 });
 
+// get all tasks from database
 router.get('/', (req, res) => {
     console.log('In /tasks GET');
     let queryText = `SELECT * FROM "tasks" ORDER BY "task", "completed";`;
