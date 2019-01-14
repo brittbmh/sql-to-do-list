@@ -2,6 +2,10 @@ body {
     font-family: Arial, Helvetica, sans-serif
 }
 
+.jumbotron {
+    background-color: lightcoral
+}
+
 #submit-task {
     margin-top: 15px;
 }
@@ -13,4 +17,9 @@ body {
 
 #hide-complete {
     margin-bottom: 10px;
+}
+
+.btn-outline-primary {
+    border-color: #0d47a1;
+    color: #0d47a1
 }
